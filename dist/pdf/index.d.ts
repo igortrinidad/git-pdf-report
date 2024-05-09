@@ -1,6 +1,7 @@
+import { jsPDF } from "jspdf";
 import type { ICommit } from '../types/commit';
 export declare class GitReportPdfService {
-    doc: any;
+    doc: jsPDF;
     colors: {
         white: string;
         zinc100: string;
@@ -18,7 +19,6 @@ export declare class GitReportPdfService {
         cyan900: string;
     };
     sourceUrl: string;
-    headline: string;
     title: string;
     subtitle: string;
     date: string | null;
@@ -41,9 +41,9 @@ export declare class GitReportPdfService {
     init(): Promise<void>;
     setPageInfo(): void;
     registerCustomFonts(): Promise<void>;
-    addPage(): Promise<void>;
     addHeaderAndFooterNotes(): Promise<void>;
     addPageHeader(): Promise<void>;
+    addPageFooter(): void;
     addLink(): void;
     addPageCount(): Promise<void>;
     addPagesPattern(): Promise<void>;
@@ -63,6 +63,7 @@ export declare class GitReportPdfService {
         styles: {
             fontSize: number;
             font: string;
+            textColor: string;
             cellPadding: {
                 top: number;
                 bottom: number;
@@ -74,12 +75,13 @@ export declare class GitReportPdfService {
         content: any;
         colSpan: number;
     }[][];
-    getTableHeaderContent(content: string | number, colSpan?: number, fontSize?: number): {
+    getFormattedTableContent(content: string | number, colSpan?: number, fontSize?: number, font?: string, color?: string): {
         content: string | number;
         colSpan: number;
         styles: {
             fontSize: number;
             font: string;
+            textColor: string;
             cellPadding: {
                 top: number;
                 bottom: number;
