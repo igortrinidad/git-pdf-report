@@ -75,13 +75,6 @@ class GitReportPdfService {
         (0, Lato_Light_1.registerLatoLight)(this.doc);
         this.doc.setFont('Lato-Regular');
     }
-    async addHeaderAndFooterNotes() {
-        this.doc.setFont('Lato-Bold');
-        this.doc.setFontSize(8);
-        this.doc.setTextColor(this.colors.zinc600);
-        // await this.doc.text(headerNoteResult, this.margins.left, this.yTop + 5, { align: 'left' } )
-        await this.doc.text('Generated at: ' + this.date, this.margins.left, this.yBottom + 5, { align: 'left' });
-    }
     async addPageHeader() {
         this.doc.setFillColor('#374151');
         this.doc.rect(0, 0, this.pageWidth, this.margins.top, 'F');
@@ -109,15 +102,15 @@ class GitReportPdfService {
     addPageFooter() {
         this.doc.setFillColor('#374151');
         this.doc.rect(0, this.yBottom + 25, this.pageWidth, this.margins.bottom - 25, 'F');
-        this.doc.setFontSize(10);
+        this.doc.setFontSize(9);
         this.doc.setFont('Lato-Regular');
-        this.doc.text(`Generated at`, this.margins.left, this.pageHeight - 15, { baseline: 'bottom' });
+        this.doc.text(`Generated at ${this.date}`, this.margins.left, this.pageHeight - 14, { baseline: 'bottom' });
     }
     addLink() {
         this.doc.setFont('Lato-Bold');
         this.doc.setTextColor('#3b82f6');
         this.doc.setFontSize(9);
-        this.doc.textWithLink('github.com/igortrinidad/git-pdf-report', this.xRight, this.pageHeight - 20, {
+        this.doc.textWithLink('git-pdf-report', this.xRight / 2 + 30, this.pageHeight - 14, {
             url: 'https://github.com/igortrinidad/git-pdf-report',
             align: 'right',
         });
@@ -126,10 +119,8 @@ class GitReportPdfService {
         this.doc.setFont('Lato-Bold');
         this.doc.setFontSize(8);
         this.doc.setTextColor('#f3f4f6');
-        const xPos = this.pageWidth - this.margins.right;
-        const yPos = this.pageHeight - 10;
         const pages = this.doc.internal.getNumberOfPages();
-        this.doc.text(`${this.doc.internal.getCurrentPageInfo().pageNumber} - ${pages}`, xPos, yPos, { align: 'right' });
+        this.doc.text(`${this.doc.internal.getCurrentPageInfo().pageNumber} - ${pages}`, this.pageWidth - this.margins.right, this.pageHeight - 14, { align: 'right' });
     }
     async addPagesPattern() {
         const pages = this.doc.internal.getNumberOfPages();
@@ -225,7 +216,18 @@ class GitReportPdfService {
         ];
     }
     getCommitFilesTableBody(commit) {
-        return commit.files.map((file) => ([{ content: file, colSpan: 2 }]));
+        return commit.files.map((file) => ([{
+                content: file,
+                colSpan: 2,
+                styles: {
+                    fontSize: 10,
+                    cellPadding: {
+                        top: 2,
+                        bottom: 2,
+                        left: 3
+                    }
+                },
+            }]));
     }
     getFormattedTableContent(content, colSpan = 1, fontSize = 10, font = 'Lato-Bold', color = '#164e63') {
         return {

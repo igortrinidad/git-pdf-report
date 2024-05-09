@@ -41,7 +41,6 @@ export declare class GitReportPdfService {
     init(): Promise<void>;
     setPageInfo(): void;
     registerCustomFonts(): Promise<void>;
-    addHeaderAndFooterNotes(): Promise<void>;
     addPageHeader(): Promise<void>;
     addPageFooter(): void;
     addLink(): void;
@@ -74,6 +73,14 @@ export declare class GitReportPdfService {
     getCommitFilesTableBody(commit: ICommit): {
         content: any;
         colSpan: number;
+        styles: {
+            fontSize: number;
+            cellPadding: {
+                top: number;
+                bottom: number;
+                left: number;
+            };
+        };
     }[][];
     getFormattedTableContent(content: string | number, colSpan?: number, fontSize?: number, font?: string, color?: string): {
         content: string | number;

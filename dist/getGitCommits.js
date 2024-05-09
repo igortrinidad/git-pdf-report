@@ -20,6 +20,11 @@ const getGitCommits = async () => {
                     currentCommit = JSON.parse(line);
                     currentCommit.files = [];
                 }
+                else if (line.startsWith('branch:')) {
+                    if (currentCommit) {
+                        currentCommit.branch = line.replace('branch: ', '').trim();
+                    }
+                }
                 else if (line && currentCommit) {
                     currentCommit.files.push(line.trim());
                 }

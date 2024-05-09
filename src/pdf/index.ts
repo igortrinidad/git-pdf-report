@@ -88,14 +88,6 @@ export class GitReportPdfService {
     this.doc.setFont('Lato-Regular')
   }
 
-  async addHeaderAndFooterNotes() {
-    this.doc.setFont('Lato-Bold')
-    this.doc.setFontSize(8)
-    this.doc.setTextColor(this.colors.zinc600)
-    // await this.doc.text(headerNoteResult, this.margins.left, this.yTop + 5, { align: 'left' } )
-    await this.doc.text('Generated at: ' + this.date, this.margins.left, this.yBottom + 5, { align: 'left' } )
-  }
-
   async addPageHeader() {
     
     this.doc.setFillColor('#374151')
@@ -130,9 +122,9 @@ export class GitReportPdfService {
   addPageFooter() {
     this.doc.setFillColor('#374151')
     this.doc.rect(0, this.yBottom + 25, this.pageWidth, this.margins.bottom - 25, 'F')
-    this.doc.setFontSize(10)
+    this.doc.setFontSize(9)
     this.doc.setFont('Lato-Regular')
-    this.doc.text(`Generated at`, this.margins.left, this.pageHeight - 15, { baseline : 'bottom' })
+    this.doc.text(`Generated at ${ this.date }`, this.margins.left, this.pageHeight - 14, { baseline : 'bottom' })
   }
   
   addLink() {        
@@ -140,9 +132,9 @@ export class GitReportPdfService {
     this.doc.setTextColor('#3b82f6')
     this.doc.setFontSize(9)
     this.doc.textWithLink( 
-      'github.com/igortrinidad/git-pdf-report', 
-      this.xRight,
-      this.pageHeight - 20,
+      'git-pdf-report', 
+      this.xRight / 2 + 30,
+      this.pageHeight - 14,
       { 
         url: 'https://github.com/igortrinidad/git-pdf-report', 
         align: 'right',
@@ -154,10 +146,8 @@ export class GitReportPdfService {
     this.doc.setFont('Lato-Bold')
     this.doc.setFontSize(8)
     this.doc.setTextColor('#f3f4f6')
-    const xPos = this.pageWidth - this.margins.right
-    const yPos = this.pageHeight - 10
     const pages = (this.doc as any).internal.getNumberOfPages()
-    this.doc.text(`${ (this.doc as any).internal.getCurrentPageInfo().pageNumber } - ${ pages }`, xPos, yPos, { align: 'right' } )
+    this.doc.text(`${ (this.doc as any).internal.getCurrentPageInfo().pageNumber } - ${ pages }`, this.pageWidth - this.margins.right, this.pageHeight - 14, { align: 'right' } )
   }
   
 
@@ -273,7 +263,18 @@ export class GitReportPdfService {
   }
 
   getCommitFilesTableBody(commit: ICommit) {
-    return commit.files.map((file: any) => ([{ content: file, colSpan: 2 }]))
+    return commit.files.map((file: any) => ([{ 
+      content: file, 
+      colSpan: 2,
+      styles: {
+        fontSize: 10,
+        cellPadding: {
+          top: 2,
+          bottom: 2,
+          left: 3
+        }
+      },
+    }]))
   }
 
   getFormattedTableContent(content: string | number, colSpan: number = 1, fontSize: number = 10, font: string = 'Lato-Bold', color: string = '#164e63') {
