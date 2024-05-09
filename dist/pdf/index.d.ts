@@ -2,22 +2,6 @@ import { jsPDF } from "jspdf";
 import type { ICommit } from '../types/commit';
 export declare class GitReportPdfService {
     doc: jsPDF;
-    colors: {
-        white: string;
-        zinc100: string;
-        zinc200: string;
-        zinc300: string;
-        zinc400: string;
-        zinc500: string;
-        zinc600: string;
-        zinc700: string;
-        zinc800: string;
-        zinc900: string;
-        orange600: string;
-        amber600: string;
-        cyan700: string;
-        cyan900: string;
-    };
     sourceUrl: string;
     title: string;
     subtitle: string;
@@ -39,7 +23,7 @@ export declare class GitReportPdfService {
     commits: ICommit[];
     constructor(args: any);
     init(): Promise<void>;
-    setPageInfo(): void;
+    setDocInfo(): void;
     registerCustomFonts(): Promise<void>;
     addPageHeader(): Promise<void>;
     addPageFooter(): void;

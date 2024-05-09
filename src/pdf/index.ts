@@ -15,23 +15,6 @@ export class GitReportPdfService {
 
   doc: jsPDF = null
 
-  colors = {
-    white : '#FFF',
-    zinc100 : '#f4f4f5',
-    zinc200 : '#e4e4e7',
-    zinc300 : '#d4d4d8',
-    zinc400 : '#a1a1aa',
-    zinc500 : '#71717a',
-    zinc600 : '#52525b',
-    zinc700 : '#3f3f46',
-    zinc800 : '#27272a',
-    zinc900 : '#18181b',
-    orange600 : '#ea580c',
-    amber600 : '#d97706',
-    cyan700 : '#0e7490',
-    cyan900 : '#164e63'
-  }
-
   sourceUrl: string = ''
   title: string = 'title'
   subtitle: string = 'Subtitle'
@@ -59,20 +42,18 @@ export class GitReportPdfService {
 
   constructor(args: any) {
     this.doc = new jsPDF({ format: 'a4', unit: 'px', orientation: args.orientation || 'portrait' })
+    this.title = args.title ?? 'Git report'
     this.filename = args.filename ?? 'Git report'
-    this.title = args.title ?? 'Some'
-    this.subtitle = args.subtitle ?? 'Title'
-    this.subtitle = args.subtitle ?? ''
+    this.date = args.date ?? dayjs().format('YYYY-MM-DD HH:mm')
     this.commits = args.commits ?? []
   }
 
   async init() {
-    this.setPageInfo()
+    this.setDocInfo()
     await this.registerCustomFonts()
-    this.date = dayjs().format('YYYY-MM-DD HH:mm')
   }
 
-  setPageInfo() {
+  setDocInfo() {
     this.pageWidth = this.doc.internal.pageSize.getWidth()
     this.pageHeight = this.doc.internal.pageSize.getHeight()
     this.xLeft = this.margins.left
@@ -108,14 +89,14 @@ export class GitReportPdfService {
     const captionsYPositionStart = 20
     
     this.doc.setFont('Lato-Bold')
-    this.doc.setTextColor(this.colors.zinc100)
+    this.doc.setTextColor('#f3f4f6')
     this.doc.setFontSize(10)
     this.doc.text('Project report', captionsXPosition, captionsYPositionStart, { baseline : 'bottom' })
 
     this.doc.setFont('Lato-Regular')
-    this.doc.setTextColor(this.colors.zinc100)
+    this.doc.setTextColor('#f3f4f6')
     this.doc.setFontSize(12)
-    this.doc.text(`${this.title} - ${this.subtitle}`, captionsXPosition, captionsYPositionStart + 12, { baseline : 'bottom' })
+    this.doc.text(`${ this.title }`, captionsXPosition, captionsYPositionStart + 12, { baseline : 'bottom' })
     
   }
 
@@ -216,11 +197,11 @@ export class GitReportPdfService {
         },
         bodyStyles: {
           lineWidth: 0.5,
-          lineColor: this.colors.zinc100,
+          lineColor: '#f3f4f6',
         },
         headStyles: {
           lineWidth: 0,
-          lineColor: this.colors.zinc100,
+          lineColor: '#f3f4f6',
         },
         columnStyles: {
           0: { cellWidth: this.getTableCellWidth(2) },
@@ -253,7 +234,7 @@ export class GitReportPdfService {
         this.getFormattedTableContent('Files changed', 1, 10, 'Lato-Bold', '#a1a1aa'),
       ],
       [
-        this.getFormattedTableContent(commit.date, 1, 10),
+        this.getFormattedTableContent(dayjs(commit.date).format('dddd, YYYY-MM-DD HH:mm:ss'), 1, 10),
         this.getFormattedTableContent(commit.files.length, 1, 10)
       ],
       [
@@ -264,7 +245,7 @@ export class GitReportPdfService {
 
   getCommitFilesTableBody(commit: ICommit) {
     return commit.files.map((file: any) => ([{ 
-      content: file, 
+      content: file.path, 
       colSpan: 2,
       styles: {
         fontSize: 10,
