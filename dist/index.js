@@ -23,6 +23,7 @@ async function main() {
         await pdfService.init();
         pdfService.generateTables();
         await pdfService.export();
+        console.log('Git pdf report generated successfully!');
     }
     catch (error) {
         console.error('Error generating Git report or PDF:', error);

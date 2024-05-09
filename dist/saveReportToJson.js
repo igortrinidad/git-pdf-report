@@ -7,6 +7,5 @@ exports.saveReportToJson = void 0;
 const fs_1 = __importDefault(require("fs"));
 async function saveReportToJson(report, outputFile) {
     fs_1.default.writeFileSync(outputFile, JSON.stringify(report, null, 4));
-    console.log('Git json report generated successfully!');
 }
 exports.saveReportToJson = saveReportToJson;
