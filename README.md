@@ -9,9 +9,11 @@ Git Report Generator is a free and open-source library that provides functionali
 ## Usage
 
 ```bash
-npx git-pdf-report # that's it \0/
+npx git-pdf-report
 
 ```
+
+That's it! Generate a simple git PDF report in just one command.
 
 ## 🤝 Contributing
 
