@@ -1,0 +1,45 @@
+{
+  "name": "git-pdf-report",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "bin": {
+    "git-report-pdf": "./dist/index.js"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "build": "npm run build:ts && npm run build:bin",
+    "build:ts": "tsc -p tsconfig.json",
+    "build:bin": "echo \"#!/usr/bin/env node \n\" | cat - ./dist/index.js > temp && mv temp ./dist/index.js",
+    "test": "npx tsx ./src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igortrinidad/git-pdf-report.git"
+  },
+  "keywords": [
+    "git",
+    "contributions",
+    "report",
+    "pdf"
+  ],
+  "author": "Igor Trindade",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/igortrinidad/git-pdf-report/issues"
+  },
+  "homepage": "https://github.com/igortrinidad/git-pdf-report#readme",
+  "devDependencies": {
+    "@types/node": "^20.12.11",
+    "inquirer": "^9.2.20",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "axios": "^1.6.8",
+    "dayjs": "^1.11.11",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2"
+  }
+}
