@@ -219,6 +219,7 @@ export class GitReportPdfService {
         body,
         head,
         pageBreak: 'auto',
+        showHead: 'firstPage',
         styles: {
           font: 'Lato-Regular',
           fontSize: 8,

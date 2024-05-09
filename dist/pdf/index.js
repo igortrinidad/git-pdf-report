@@ -117,8 +117,8 @@ class GitReportPdfService {
         this.doc.setFont('Lato-Bold');
         this.doc.setTextColor(this.colors.cyan700);
         this.doc.setFontSize(9);
-        this.doc.textWithLink('calculoeprevidencia.com', this.xRight, this.pageHeight - 20, {
-            url: 'https://calculoeprevidencia.com',
+        this.doc.textWithLink('github.com/igortrinidad/git-pdf-report', this.xRight, this.pageHeight - 20, {
+            url: 'https://github.com/igortrinidad/git-pdf-report',
             align: 'right',
         });
     }
@@ -173,6 +173,7 @@ class GitReportPdfService {
                 body,
                 head,
                 pageBreak: 'auto',
+                showHead: 'firstPage',
                 styles: {
                     font: 'Lato-Regular',
                     fontSize: 8,
