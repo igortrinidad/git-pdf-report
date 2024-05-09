@@ -35,7 +35,7 @@ export const getGitCommits = async (): Promise<ICommit[]> =>  {
 
     const repositoryUrl = await getRepositoryUrl()
 
-    exec('git log --name-only --pretty=format:"{ \\"commit\\": \\"%H\\", \\"author\\": \\"%an\\", \\"author_email\\": \\"%ae\\", \\"date\\": \\"%ad\\", \\"message\\": \\"%f\\", \\"branch\\": \\"%d\\" }"', (err, stdout, stderr) => {
+    exec('git log --name-only --pretty=format:"{ \\"commit\\": \\"%H\\", \\"author\\": \\"%an\\", \\"author_email\\": \\"%ae\\", \\"date\\": \\"%ad\\", \\"message\\": \\"%f\\", \\"branch\\": \\"%d\\" }"', { maxBuffer: 1024 * 30000 }, (err, stdout, stderr) => {
       if (err) {
         reject(err)
         return

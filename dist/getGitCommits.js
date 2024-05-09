@@ -29,7 +29,7 @@ const getGitHubFileChangeUrl = (commitHash, filePath, repositoryUrl) => {
 const getGitCommits = async () => {
     return new Promise(async (resolve, reject) => {
         const repositoryUrl = await getRepositoryUrl();
-        (0, child_process_1.exec)('git log --name-only --pretty=format:"{ \\"commit\\": \\"%H\\", \\"author\\": \\"%an\\", \\"author_email\\": \\"%ae\\", \\"date\\": \\"%ad\\", \\"message\\": \\"%f\\", \\"branch\\": \\"%d\\" }"', (err, stdout, stderr) => {
+        (0, child_process_1.exec)('git log --name-only --pretty=format:"{ \\"commit\\": \\"%H\\", \\"author\\": \\"%an\\", \\"author_email\\": \\"%ae\\", \\"date\\": \\"%ad\\", \\"message\\": \\"%f\\", \\"branch\\": \\"%d\\" }"', { maxBuffer: 1024 * 30000 }, (err, stdout, stderr) => {
             if (err) {
                 reject(err);
                 return;
