@@ -2,7 +2,7 @@
 
 Git pdf report is a free and open-source library designed to simplify the process of generating reports from Git repositories. Whether you're a developer, project manager, or just someone interested in analyzing Git data, this library has got you covered.
 
-![](https://github.com/igortrinidad/git-pdf-report/docs/preview.gif)
+![](https://github.com/igortrinidad/git-pdf-report/blob/main/docs/preview.gif)
 
 ## Features
 
