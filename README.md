@@ -1,12 +1,13 @@
 # Git pdf report
 
-Git Report Generator is a free and open-source library designed to simplify the process of generating reports from Git repositories. Whether you're a developer, project manager, or just someone interested in analyzing Git data, this library has got you covered.
+Git pdf report is a free and open-source library designed to simplify the process of generating reports from Git repositories. Whether you're a developer, project manager, or just someone interested in analyzing Git data, this library has got you covered.
 
 ## Features
 
 - 📄 PDF and JSON Output: Generate reports in both PDF and JSON formats, making it easy to share and analyze your Git data.
 - 🔍 Commit Analysis: Dive deep into commit details, including hashes, authors, dates, and commit messages, for comprehensive insights.
 - 📝 Simple Usage: With just one command, you can effortlessly generate a clear and concise PDF report for your Git repositories.
+- 📅 Filter by dates: Easily select the start and end date for the report.
 
 ## Usage
 
@@ -17,7 +18,7 @@ npx git-pdf-report
 
 That's it! With this command, you can create a professional Git PDF report in seconds.
 
-Ready to streamline your Git reporting process? Give Git Report Generator a try and let me know what you think! Feel free to contribute to the project or share your feedback. Together, let's make Git reporting easier and more accessible for everyone. 💻✨
+Ready to streamline your Git reporting process? Give Git pdf report a try and let me know what you think! Feel free to contribute to the project or share your feedback. Together, let's make Git reporting easier and more accessible for everyone. 💻✨
 
 ## 🤝 Contributing
 
