@@ -2,6 +2,7 @@ import { getGitCommits } from './getGitCommits'
 import { saveReportToJson } from './saveReportToJson'
 import { GitReportPdfService } from './pdf'
 import { input, select } from '@inquirer/prompts'
+import confirm from '@inquirer/confirm'
 import { getRepositoryName } from './getRepositoryName'
 import dayjs from 'dayjs'
 import { getTimeframes } from './getTimeframes'
@@ -25,6 +26,8 @@ async function main() {
       }),
     })
 
+    const generateJson = await confirm({ message: 'Generate .json report as well?' })
+
     const gitCommits = await getGitCommits()
     const filteredCommits = filterCommitsByTimeframe(gitCommits, timeframe)
 
@@ -37,7 +40,11 @@ async function main() {
 
     const date = dayjs().format('YYYY-MM-DD HH:mm')
     const filename = `${title} ${date}`.replace(/[^a-z0-9\s\.]/gi, '_').replace(/ /g, '_').replace(/_+/g, '_')
-    await saveReportToJson(gitCommits, `${filename}.json`)
+    
+    if(generateJson) {
+      await saveReportToJson(gitCommits, `${filename}.json`)
+    }
+
     const pdfService = new GitReportPdfService({ title, date, filename, commits: gitCommits })
     await pdfService.init()
     pdfService.generateTables()

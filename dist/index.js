@@ -9,6 +9,7 @@ const getGitCommits_1 = require("./getGitCommits");
 const saveReportToJson_1 = require("./saveReportToJson");
 const pdf_1 = require("./pdf");
 const prompts_1 = require("@inquirer/prompts");
+const confirm_1 = __importDefault(require("@inquirer/confirm"));
 const getRepositoryName_1 = require("./getRepositoryName");
 const dayjs_1 = __importDefault(require("dayjs"));
 const getTimeframes_1 = require("./getTimeframes");
@@ -27,12 +28,19 @@ async function main() {
                 };
             }),
         });
+        const generateJson = await (0, confirm_1.default)({ message: 'Generate .json report as well?' });
         const gitCommits = await (0, getGitCommits_1.getGitCommits)();
         const filteredCommits = (0, filterCommitsByTimeframe_1.filterCommitsByTimeframe)(gitCommits, timeframe);
         console.log('Found commits:', gitCommits.length, ' Filtered commits:', filteredCommits.length);
+        if (!filteredCommits.length) {
+            console.log('No commits found for the selected timeframe, the report will not be generated.');
+            return;
+        }
         const date = (0, dayjs_1.default)().format('YYYY-MM-DD HH:mm');
         const filename = `${title} ${date}`.replace(/[^a-z0-9\s\.]/gi, '_').replace(/ /g, '_').replace(/_+/g, '_');
-        await (0, saveReportToJson_1.saveReportToJson)(gitCommits, `${filename}.json`);
+        if (generateJson) {
+            await (0, saveReportToJson_1.saveReportToJson)(gitCommits, `${filename}.json`);
+        }
         const pdfService = new pdf_1.GitReportPdfService({ title, date, filename, commits: gitCommits });
         await pdfService.init();
         pdfService.generateTables();
